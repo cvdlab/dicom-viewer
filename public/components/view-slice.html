@@ -1,0 +1,64 @@
+<link rel="import" href="html-component.html">
+
+<template>
+  <style>
+    :host {
+      display: block;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #canvas {
+      border: 3px solid #333;
+    }
+  </style>
+
+  <div id="container">
+    <canvas id="canvas"></canvas>
+    <input id="slider" type="range" />
+  </div>
+
+</template>
+
+<script>
+(function () {
+
+  const doc = document.currentScript.ownerDocument
+
+  class View extends HTMLComponent {
+
+    static get is () { return 'view-slice' }
+
+    static get doc () { return doc }
+
+    constructor () {
+      super()
+    }
+
+    connectedCallback () {
+      super.connectedCallback()
+      this.on_input = this.on_input.bind(this)
+      this.refs.slider.addEventListener('input', this.on_input)
+    }
+
+    disconnectedCallback () {
+      super.disconnectedCallback()
+      this.refs.slider.removeEventListener('input', this.inputinput)
+    }
+
+    on_input (event) {
+      let coord = this.getAttribute('coord')
+      let slice = this.refs.slider.value
+      this.action('slice', { coord, slice })
+    }
+
+  }
+
+  window.customElements.define(View.is, View)
+
+})()
+</script>

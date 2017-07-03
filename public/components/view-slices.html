@@ -1,0 +1,53 @@
+<link rel="import" href="html-component.html">
+<link rel="import" href="view-slice.html">
+
+<template>
+  <style>
+    :host {
+      display: block;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  </style>
+
+  <div id="container">
+    <view-slice class="view" coord="0"></view-slice>
+    <view-slice class="view" coord="1"></view-slice>
+    <view-slice class="view" coord="2"></view-slice>
+  <div>
+
+</template>
+
+<script>
+(function () {
+
+  const doc = document.currentScript.ownerDocument
+
+  class View extends HTMLComponent {
+
+    static get is () { return 'view-slices' }
+
+    static get doc () { return doc }
+
+    constructor () {
+      super()
+    }
+
+    connectedCallback () {
+      super.connectedCallback()
+    }
+
+    disconnectedCallback () {
+      super.disconnectedCallback()
+    }
+
+  }
+
+  window.customElements.define(View.is, View)
+
+})()
+</script>

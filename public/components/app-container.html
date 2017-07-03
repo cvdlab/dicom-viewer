@@ -1,0 +1,69 @@
+<link rel="import" href="html-component.html">
+<link rel="import" href="view-slices.html">
+<link rel="import" href="view-input.html">
+
+<template>
+  <style>
+    :host {
+      display: block;
+    }
+
+    :host > * {
+      --font-color: #333;
+
+      font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    }
+  </style>
+
+  <div id="container">
+    <h1 id="title">DICOM viewer</h1>
+    <view-input id="input"></view-input>
+    <view-slices id="slices"></view-slices>
+  </div>
+
+</template>
+
+<script>
+(function () {
+
+  const doc = document.currentScript.ownerDocument
+
+  class View extends HTMLComponent {
+
+    static get is () { return 'app-container' }
+
+    static get doc () { return doc }
+
+    constructor () {
+      super()
+    }
+
+    connectedCallback () {
+      super.connectedCallback()
+      this.on_action = this.on_action.bind(this)
+      this.shadowRoot.addEventListener('action', this.on_action)
+    }
+
+    disconnectedCallback () {
+      super.disconnectedCallback()
+      this.shadowRoot.removeEventListener('action', this.on_action)
+    }
+
+    on_action (event) {
+      let action = event.detail
+      let method = this[`action ${action.name}`]
+      if (typeof method === 'function') {
+        method.call(this, action.data)
+      }
+    }
+
+    ['action slice'] (detail) {
+      console.log('action slice', detail)
+    }
+
+  }
+
+  window.customElements.define(View.is, View)
+
+})()
+</script>

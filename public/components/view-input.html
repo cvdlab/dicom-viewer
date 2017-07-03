@@ -1,0 +1,54 @@
+<link rel="import" href="html-component.html">
+
+<template>
+  <style>
+    :host {
+      display: block;
+    }
+
+    input {
+      background-color: #fff;
+      border: none;
+      font-size: 18px;
+      color: var(--font-color);
+      padding: 6px;
+      border: none;
+      border-bottom: 3px solid #333;
+      margin-bottom: 12px;
+      outline: none;
+    }
+  </style>
+
+  <input id="input" type="text" placeholder="Insert DICOM file path">
+
+</template>
+
+<script>
+(function () {
+
+  const doc = document.currentScript.ownerDocument
+
+  class View extends HTMLComponent {
+
+    static get is () { return 'view-input' }
+
+    static get doc () { return doc }
+
+    constructor () {
+      super()
+    }
+
+    connectedCallback () {
+      super.connectedCallback()
+    }
+
+    disconnectedCallback () {
+      super.disconnectedCallback()
+    }
+
+  }
+
+  window.customElements.define(View.is, View)
+
+})()
+</script>

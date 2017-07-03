@@ -1,0 +1,45 @@
+<script>
+  class HTMLComponent extends HTMLElement {
+
+    static get is () { throw new Error('static getter `is` must be overridden') }
+
+    static get doc () { throw new Error('static getter `doc` must be overridden') }
+
+    constructor () {
+      super()
+      let shadow = this.attachShadow({ mode: 'open' })
+      let template = this.constructor.doc.querySelector('template')
+      let content = document.importNode(template.content, true)
+      shadow.appendChild(content)
+    }
+
+    fire (type, detail) {
+      let config = { bubbles: true, cancelable: true, composed: true, detail: detail }
+      let event = new CustomEvent(type, config)
+      this.dispatchEvent(event)
+      return this
+    }
+
+    action (name, data) {
+      this.fire('action', { name: name, data: data })
+      return this
+    }
+
+    connectedCallback () {
+      this._init_refs()
+    }
+
+    disconnectedCallback () {
+
+    }
+
+    _init_refs () {
+      this.refs = {}
+      let refs = Array.from(this.shadowRoot.querySelectorAll('[id]'))
+      for (let ref of refs) {
+        this.refs[ref.id] = ref
+      }
+    }
+
+  }
+</script>
