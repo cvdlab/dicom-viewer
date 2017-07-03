@@ -36,6 +36,9 @@
 
     constructor () {
       super()
+      this.data = {
+        dicom: { name: 'test' }
+      }
     }
 
     connectedCallback () {
@@ -51,14 +54,32 @@
 
     on_action (event) {
       let action = event.detail
-      let method = this[`action ${action.name}`]
+      let method = this[`action_${action.name}`]
       if (typeof method === 'function') {
         method.call(this, action.data)
       }
     }
 
-    ['action slice'] (detail) {
-      console.log('action slice', detail)
+    action_slice (detail) {
+      let dicom = this.data.dicom
+      let name = dicom.name
+      let coord = detail.coord
+      let slice = detail.slice
+
+      fetch(`/api/0/dicom/${name}/${coord}/${slice}`)
+        .then((res) => {
+          if (!res.ok) {
+            console.warn(res)
+            return
+          }
+          return res.text()
+        })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.warn(err)
+        })
     }
 
   }
