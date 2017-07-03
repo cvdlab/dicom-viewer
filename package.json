@@ -1,0 +1,26 @@
+{
+  "name": "dicom-viewer",
+  "version": "1.0.0",
+  "description": "DICOM viewer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cvdlab/dicom-viewer.git"
+  },
+  "keywords": [
+    "DICOM",
+    "viewer"
+  ],
+  "author": "CVDLAB",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cvdlab/dicom-viewer/issues"
+  },
+  "homepage": "https://github.com/cvdlab/dicom-viewer#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
