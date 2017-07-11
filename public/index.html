@@ -8,7 +8,23 @@
 </head>
 <body>
 
+<!-- jquery - currently a dependency and thus required for using cornerstoneWADOImageLoader -->
+<script src="jquery.min.js"></script>
+
+<!-- include the cornerstone library -->
+<script src="cornerstone/cornerstone.min.js"></script>
+<script src="cornerstone/cornerstoneMath.js"></script>
+<script src="cornerstone/cornerstoneTools.js"></script>
+
+<!-- include the dicomParser library as the WADO image loader depends on it -->
+<script src="cornerstone/dicomParser.min.js"></script>
+
+<!-- include the cornerstoneWADOImageLoader library -->
+<script src="cornerstone/cornerstoneWADOImageLoader.js"></script>
+
   <app-container id="app"></app-container>
+<img id="testimg">
+</img>
 
 </body>
 </html>

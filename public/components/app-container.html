@@ -21,9 +21,33 @@
     <view-slices id="slices"></view-slices>
   </div>
 
+
 </template>
 
 <script>
+var loaded = false;
+
+function loadAndViewImage(imageId) {
+    var element = $('#testimg').get(0);
+    cornerstone.loadImage(imageId).then(function (image) {
+        console.log(image);
+        var viewport = cornerstone.getDefaultViewportForImage(element, image);
+        cornerstone.displayImage(element, image, viewport);
+        if (loaded === false) {
+            cornerstoneTools.mouseInput.enable(element);
+            cornerstoneTools.mouseWheelInput.enable(element);
+            cornerstoneTools.wwwc.activate(element, 1); // ww/wc is the default tool for left mouse button
+            cornerstoneTools.pan.activate(element, 2); // pan is the default tool for middle mouse button
+            cornerstoneTools.zoom.activate(element, 4); // zoom is the default tool for right mouse button
+            cornerstoneTools.zoomWheel.activate(element); // zoom is the default tool for middle mouse wheel
+            loaded = true;
+        }
+
+    }, function (err) {
+        alert(err);
+    });
+}
+
 (function () {
 
   const doc = document.currentScript.ownerDocument
@@ -72,14 +96,23 @@
             console.warn(res)
             return
           }
-          return res.text()
+          return res.blob();
+          //var viewport = cornerstone.getDefaultViewportForImage(canvas, res.body);
+          //cornerstone.displayImage(element, image, viewport);
+          //var imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(res.body);
+          //console.log(imageId)
+          //loadAndViewImage(imageId);
+          //return res.text()
         })
-        .then((res) => {
-          console.log(res)
+        .then(function(myBlob) {
+          var objectURL = URL.createObjectURL(myBlob);
+          var myImage = document.querySelector('#testimg');
+          myImage.src = objectURL;
+
         })
         .catch((err) => {
-          console.warn(err)
-        })
+            console.warn(err)
+        });
     }
 
   }

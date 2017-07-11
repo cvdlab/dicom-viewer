@@ -21,6 +21,10 @@
   },
   "homepage": "https://github.com/cvdlab/dicom-viewer#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "cornerstone-core": "^0.12.1",
+    "dicom-parser": "^1.7.5",
+    "express": "^4.15.3",
+    "orthanc-client": "^0.10.5",
+    "rusha": "^0.8.6"
   }
 }
